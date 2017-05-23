@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var arr=[{a:1,b:2},{a:2,b:1},{a:1},{b:2,a:1},{a:1,b:2},{a:1,b:2},{b:2},{b:2}];
+		function Filter(arr){
+			this.arr=arr;
+			this.result=[];
+			this.pushArr();
+			console.log(this.result)
+		}
+		Filter.prototype.pushArr=function(){
+			for(var i=0;i<this.arr.length-1;i++){
+				for(var j=i+1;j<this.arr.length;j++){
+					if(this.compareJson(this.arr[i],this.arr[j])){
+						if(this.result.length==0){
+							this.result.push(this.arr[i]);
+							continue;
+						}
+						for(var v=0;v<this.result.length;v++){
+							if(!this.compareJson(this.arr[i],this.result[v])){
+								this.result.push(this.arr[i]);
+							}
+						}
+					}
+				}
+			}
+		}
+		Filter.prototype.compareJson=function(json1,json2){
+			for(var name in json2){
+				if(json1[name] != json2[name]){
+					return false;
+				}
+			}
+			for(var name in json1){
+				if(json2[name] != json1[name]){
+					return false;
+				}
+			}
+			return true;
+		}
+		var filterArr=new Filter(arr);
+	</script>
+</body>
+</html>
